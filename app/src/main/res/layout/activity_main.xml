@@ -2,45 +2,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/titleInput"
+    <Button
+        android:id="@+id/addNewItemButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Title" />
-
-    <EditText
-        android:id="@+id/descriptionInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Description"
-        android:layout_below="@id/titleInput" />
-
-    <EditText
-        android:id="@+id/locationInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Location"
-        android:layout_below="@id/descriptionInput" />
-
-    <EditText
-        android:id="@+id/contactInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Contact Information"
-        android:layout_below="@id/locationInput" />
+        android:text="Add New Item"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="8dp"/>
 
     <Button
-        android:id="@+id/addButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Item"
-        android:layout_below="@id/contactInput" />
-
-    <ListView
-        android:id="@+id/itemsList"
+        android:id="@+id/viewItemsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/addButton" />
+        android:text="View Items"
+        android:layout_below="@id/addNewItemButton"
+        android:layout_marginTop="16dp"/>
 </RelativeLayout>
