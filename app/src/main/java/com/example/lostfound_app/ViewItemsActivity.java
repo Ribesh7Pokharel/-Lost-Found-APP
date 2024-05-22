@@ -1,19 +1,17 @@
 package com.example.lostfound_app;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
 public class ViewItemsActivity extends AppCompatActivity {
+
     private DBHelper dbHelper;
-    private ListView itemsList;
-    private ArrayAdapter<String> adapter;
-    private ArrayList<String> listItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,24 +19,38 @@ public class ViewItemsActivity extends AppCompatActivity {
         setContentView(R.layout.item_entry);
 
         dbHelper = new DBHelper(this);
-        itemsList = findViewById(R.id.itemsList);
-        listItem = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listItem);
-        itemsList.setAdapter(adapter);
-        updateUI();
 
-        Button backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        ListView listView = findViewById(R.id.listView);
+        Cursor cursor = dbHelper.getAllItems();
+
+        String[] from = { "name", "description", "contact" };
+        int[] to = { R.id.itemName, R.id.itemDescription, R.id.contactInfo };
+
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
+                R.layout.item_list_layout, cursor, from, to, 0);
+
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                finish(); // Finishes this activity and returns to the previous activity (MainActivity)
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Move cursor to the clicked item
+                cursor.moveToPosition(position);
+
+                // Get the location data from the cursor
+                double latitude = cursor.getDouble(cursor.getColumnIndexOrThrow("latitude"));
+                double longitude = cursor.getDouble(cursor.getColumnIndexOrThrow("longitude"));
+
+                // Create an intent to start MapActivity
+                Intent intent = new Intent(ViewItemsActivity.this, MapActivity.class);
+                intent.putExtra("latitude", latitude);
+                intent.putExtra("longitude", longitude);
+                startActivity(intent);
             }
         });
     }
 
-    private void updateUI() {
-        listItem.clear();
-        listItem.addAll(dbHelper.getAllItems());
-        adapter.notifyDataSetChanged();
+    public Cursor getItemsCursor() {
+        return dbHelper.getAllItems();
     }
 }

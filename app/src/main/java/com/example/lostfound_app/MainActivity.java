@@ -16,11 +16,11 @@ public class MainActivity extends AppCompatActivity {
 
         Button addNewItemButton = findViewById(R.id.addNewItemButton);
         Button viewItemsButton = findViewById(R.id.viewItemsButton);
+        Button mapButton = findViewById(R.id.mapButton);
 
         addNewItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Intent to open the activity to add new item
                 Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
                 startActivity(intent);
             }
@@ -29,11 +29,17 @@ public class MainActivity extends AppCompatActivity {
         viewItemsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Intent to open the activity to view items
                 Intent intent = new Intent(MainActivity.this, ViewItemsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapActivity.class);
                 startActivity(intent);
             }
         });
     }
 }
-
